@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px;
+    }
+
+    input,
+    button {
+        padding: 10px;
+        margin: 5px;
+        font-size: 16px;
+    }
+
+    .output {
+        margin-top: 20px;
+        font-weight: bold;
+        color: #007acc;
+    }
+</style>
+
+<body>
+    <h2>Text to Hashtag Converter</h2>
+    <input type="text" id="textInput" placeholder="Enter text here">
+    <button onclick="convertToHashtag()">Convert</button>
+    <button onclick="copyToClipboard()">Copy</button>
+    <div class="output" id="output"></div>
+</body>
+<script>
+    function convertToHashtag() {
+        let text = document.getElementById("textInput").value;
+
+        if (!text) {
+            document.getElementById("output").innerText = "Please enter some text!";
+            return;
+        }
+
+        let items = text.split(',').map(item => item.trim());
+        let hashtags = items.map(item => `#${ item.replace(/\s+/g, '') }`);
+        document.getElementById("output").innerText = hashtags.join(' ');
+    }
+
+    function copyToClipboard() {
+        let outputText = document.getElementById("output").innerText;
+
+        if (!outputText) {
+            alert("Nothing to copy!");
+            return;
+        }
+
+        let tempInput = document.createElement("textarea");
+        tempInput.value = outputText;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+
+        alert("Hashtags copied to clipboard!");
+    }
+</script>
+
+</html>
